@@ -1,25 +1,22 @@
-{% extends "base.html" %}
+{% extends "base_nao_logado.html"%}
 
 {% block content %}
 
-<div class="container">
-    <form>
+<div class="container mt-5">
+    <form class="w-50 mx-auto ">
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">Nunca compartilharemos seu e-mail com mais ninguém.</div>
+            <label for="loginemail" class="form-label">Email</label>
+            <input type="email" class="form-control rounded-pill" id="loginemail" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Não compartilharemos seu e-mail com mais ninguém.</div>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="loginsenha" class="form-label">Senha</label>
+            <input type="password" class="form-control rounded-pill" id="loginsenha">
         </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Confira-me</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Entrar</button>
+        <button type="submit" class="btn btn-primary w-50 mx-auto d-block rounded-pill">Entrar</button>
+        <hr>
+        <p>Ainda não tem conta? <a class="link-opacity-100" href="{{ url_for('register') }}">Click aqui!</a></p>
     </form>
-
 </div>
 
 {% endblock %}

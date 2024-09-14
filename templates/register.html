@@ -1,0 +1,22 @@
+{% extends "base_nao_logado.html"%}
+
+{% block content %}
+
+<div class="container mt-5">
+    <form class="w-50 mx-auto ">
+        <div class="mb-3">
+            <label for="registeremail" class="form-label">Email</label>
+            <input type="email" class="form-control rounded-pill" id="registeremail" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Não compartilharemos seu e-mail com mais ninguém.</div>
+        </div>
+        <div class="mb-3">
+            <label for="registersenha" class="form-label">Senha</label>
+            <input type="password" class="form-control rounded-pill" id="registersenha">
+        </div>
+        <button type="submit" class="btn btn-primary w-50 mx-auto d-block rounded-pill">Registrar</button>
+        <hr>
+        <p>Já possui conta? <a class="link-opacity-100" href="{{ url_for('login') }}">Click aqui!</a></p>
+    </form>
+</div>
+
+{% endblock %}
