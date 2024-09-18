@@ -2,17 +2,21 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_login import LoginManager, login_user, login_required, logout_user, UserMixin, current_user
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
+import os 
 
 login_manager = LoginManager()
+load_dotenv()
+
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'ayslan_estudo'
-app.config['MYSQL_PASSWORD'] = 'estudo'
-app.config["MYSQL_CURSORCLASS"] = "DictCursor"
-app.config['MYSQL_DB'] = 'eventos'
-app.config["SECRET_KEY"] = "TESTADO"
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+app.config['MYSQL_PORT'] = int(os.getenv('MYSQL_PORT'))
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
+app.config['MYSQL_CURSORCLASS'] = os.getenv('MYSQL_CURSORCLASS')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 mysql = MySQL(app)
 login_manager.init_app(app)
@@ -69,7 +73,8 @@ def login():
         senha = request.form['password']
         user = User.get_by_email(email)
         
-        if user and user.senha == senha:
+        
+        if user and check_password_hash(user.senha, senha):
             login_user(user)
             return redirect(url_for("eventos"))
     
@@ -80,14 +85,15 @@ def register():
     if request.method == "POST":
         email = request.form['email']
         senha = request.form['password']
-        
         user = User.get_by_email(email)
+        senha_hash = generate_password_hash(senha)
+
         if user:
             pass
         else:
             cursor = mysql.connection.cursor()
             INSERT = "INSERT INTO users (email, senha) VALUES (%s, %s)"
-            cursor.execute(INSERT, (email, senha))
+            cursor.execute(INSERT, (email, senha_hash))
             mysql.connection.commit()
             cursor.close()
             flash("Registrado com sucesso", "success")
