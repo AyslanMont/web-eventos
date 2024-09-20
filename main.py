@@ -13,10 +13,10 @@ app = Flask(__name__)
 app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
 app.config['MYSQL_PORT'] = int(os.getenv('MYSQL_PORT'))
 app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
-app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_PASSWORD'] = ""
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 app.config['MYSQL_CURSORCLASS'] = os.getenv('MYSQL_CURSORCLASS')
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = str(os.getenv('SECRET_KEY'))
 
 mysql = MySQL(app)
 login_manager.init_app(app)
@@ -30,26 +30,26 @@ class User(UserMixin):
     @classmethod
     def get(cls, id):
         cursor = mysql.connection.cursor()
-        SELECT = "SELECT * FROM users WHERE id = %s"
+        SELECT = "SELECT * FROM tb_usuarios WHERE usu_id = %s"
         cursor.execute(SELECT, (id,))
         dados = cursor.fetchone()
         cursor.close()
         if dados:
-            user = User(dados['email'], dados['senha'])
-            user.id = dados['id']
+            user = User(dados['usu_email'], dados['usu_senha'])
+            user.id = dados['usu_id']
             return user
         return None
 
     @classmethod
     def get_by_email(cls, email):
         cursor = mysql.connection.cursor()
-        SELECT = "SELECT * FROM users WHERE email = %s"
+        SELECT = "SELECT * FROM tb_usuarios WHERE usu_email = %s"
         cursor.execute(SELECT, (email,))
         dados = cursor.fetchone()
         cursor.close()
         if dados:
-            user = User(dados['email'], dados['senha'])
-            user.id = dados['id']
+            user = User(dados['usu_email'], dados['usu_senha'])
+            user.id = dados['usu_id']
             return user
         return None
 
@@ -72,8 +72,6 @@ def login():
         email = request.form['email']
         senha = request.form['password']
         user = User.get_by_email(email)
-        
-        
         if user and check_password_hash(user.senha, senha):
             login_user(user)
             return redirect(url_for("eventos"))
@@ -83,6 +81,7 @@ def login():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        nome = request.form['nome']
         email = request.form['email']
         senha = request.form['password']
         user = User.get_by_email(email)
@@ -92,8 +91,8 @@ def register():
             pass
         else:
             cursor = mysql.connection.cursor()
-            INSERT = "INSERT INTO users (email, senha) VALUES (%s, %s)"
-            cursor.execute(INSERT, (email, senha_hash))
+            INSERT = "INSERT INTO tb_usuarios (usu_nome ,usu_email, usu_senha) VALUES (%s,%s,%s)"
+            cursor.execute(INSERT, (nome, email, senha_hash))
             mysql.connection.commit()
             cursor.close()
             flash("Registrado com sucesso", "success")
