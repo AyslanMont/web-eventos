@@ -3,67 +3,67 @@
 {% block content %}
 
 <div class="container mt-5">
-    <form class="row g-3">
+    <form class="row g-3" action="{{ url_for('cadastrar_eventos') }}" method="POST">
         <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Titulo do evento</label>
-            <input type="email" class="form-control" id="inputEmail4" >
+            <label for="titulocadastro" class="form-label">Titulo do evento</label>
+            <input type="text" class="form-control" id="titulocadastro" name="titulo" required placeholder="Ex: Festa de Sant'ana">
         </div>
         <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Organizador</label>
-            <input type="password" class="form-control" id="inputPassword4">
+            <label for="organizadorcadastro" class="form-label">Organização</label>
+            <input type="text" class="form-control" id="organizadorcadastro" name="org" required placeholder="Ex: Prefeitura de Caicó">
         </div>
         <div class="col-12">
-            <label for="inputAddress" class="form-label">Descrição</label>
-            <input type="text" class="form-control" id="inputAddress">
+            <label for="descricaoentrada" class="form-label">Descrição</label>
+            <input type="text" class="form-control" id="descricaoentrada" name="descricao" required placeholder="Ex: A festa de Sant'ana é o melhor festival do Brasil, venha conferir!">
         </div>
         <div class="col-12">
-            <label for="inputAddress2" class="form-label">Endereço</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Bairro, Rua, Numero">
+            <label for="descricaoentrada2" class="form-label">Endereço</label>
+            <input type="text" class="form-control" id="descricaoentrada2" placeholder="Bairro passa nada, Rua do sufoco, 157" name="endereco" required>
         </div>
         <div class="col-md-5">
-            <label for="inputCity" class="form-label">Cidade</label>
-            <input type="text" class="form-control" id="inputCity">
+            <label for="cidadeentrada" class="form-label">Cidade</label>
+            <input type="text" class="form-control" id="cidadeentrada" name="cidade" required placeholder="Ex: Caicó">
         </div>
         <div class="col-md-3">
-            <label for="inputState" class="form-label">Estado</label>
-            <select id="inputState" class="form-select">
+            <label for="estadoentrada" class="form-label">Estado</label>
+            <select id="estadoentrada" class="form-select" name="estado" required>
                 <option selected>Escolher...</option>
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option>
-                <option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option>
-                <option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option>
-                <option value="ES">Espírito Santo</option>
-                <option value="GO">Goiás</option>
-                <option value="MA">Maranhão</option>
-                <option value="MT">Mato Grosso</option>
-                <option value="MS">Mato Grosso do Sul</option>
-                <option value="MG">Minas Gerais</option>
-                <option value="PA">Pará</option>
-                <option value="PB">Paraíba</option>
-                <option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option>
-                <option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option>
-                <option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option>
-                <option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option>
-                <option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option>
-                <option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AP">AP</option>
+                <option value="AM">AM</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MT">MT</option>
+                <option value="MS">MS</option>
+                <option value="MG">MG</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PR">PR</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RS">RS</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR</option>
+                <option value="SC">SC</option>
+                <option value="SP">SP</option>
+                <option value="SE">SE</option>
+                <option value="TO">TO</option>
             </select>
         </div>
         <div class="col-md-2">
-            <label for="inputDate" class="form-label">Data</label>
-            <input type="date" class="form-control" id="inputDate">
+            <label for="dataentrada" class="form-label">Data</label>
+            <input type="date" class="form-control" id="dataentrada" name="data" required>
         </div> 
         <div class="col-md-2">
-            <label for="inputTime" class="form-label">Hora</label>
-            <input type="time" class="form-control" id="inputTime">
+            <label for="horaentrada" class="form-label">Hora</label>
+            <input type="time" class="form-control" id="horaentrada" name="hora" required>
         </div>              
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Cadastrar</button>
