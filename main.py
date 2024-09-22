@@ -74,7 +74,7 @@ def login():
         user = User.get_by_email(email)
         if user and check_password_hash(user.senha, senha):
             login_user(user)
-            return redirect(url_for("eventos"))
+            return redirect(url_for("home"))
     
     return render_template("login.html")
 
