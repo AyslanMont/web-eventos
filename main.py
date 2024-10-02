@@ -75,6 +75,8 @@ def login():
         if user and check_password_hash(user.senha, senha):
             login_user(user)
             return redirect(url_for("home"))
+        else:
+            flash("Email ou senha incorretos. Verifique suas credenciais e tente novamente.", "danger")
     
     return render_template("login.html")
 
@@ -88,14 +90,14 @@ def register():
         senha_hash = generate_password_hash(senha)
 
         if user:
-            pass
+            flash("O usuário já está cadastrado!", "danger")
         else:
             cursor = mysql.connection.cursor()
             INSERT = "INSERT INTO tb_usuarios (usu_nome, usu_email, usu_senha) VALUES (%s,%s,%s)"
             cursor.execute(INSERT, (nome, email, senha_hash))
             mysql.connection.commit()
             cursor.close()
-            flash("Registrado com sucesso", "success")
+            flash("Registro efetuado com sucesso! Use suas credenciais para fazer login.", "success")
             return redirect(url_for("login"))
     
     return render_template("register.html")
@@ -130,6 +132,8 @@ def eventos():
     SELECT = "SELECT * FROM tb_eventos"
     cursor.execute(SELECT)
     dados = cursor.fetchall()
+    if not dados:
+        flash("Parece que ainda não há eventos disponíveis no momento.", "warning")
 
     return render_template("eventos.html", dados=dados)
 
@@ -141,6 +145,8 @@ def home():
     SELECT = "SELECT * FROM tb_eventos WHERE eve_usu_id = %s"
     cursor.execute(SELECT, (current_user.id,))
     dados = cursor.fetchall()
+    if not dados:
+        flash("Você ainda não criou nenhum evento.", "warning")
 
     SELECT2 = """
                 SELECT eve_titulo, eve_desc, eve_usu_id, eve_estado, eve_data, eve_cidade, eve_endereco, eve_hora, eve_org 
@@ -149,6 +155,9 @@ def home():
             """
     cursor.execute(SELECT2, (current_user.id,))
     dados2 = cursor.fetchall()
+
+    if not dados2:
+        flash("Parece que você ainda não se inscreveu em nenhum evento. Dê uma olhada e participe!", "warning")
 
     return render_template("home.html", dados=dados, dados2=dados2)
 
@@ -159,16 +168,16 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/cadastre-se", methods=["GET", "POST"])
+@app.route("/cadastre-se/<int:evento_id>", methods=["GET", "POST"])
 @login_required
-def cadastre_se():
+def cadastre_se(evento_id):
     if request.method == "POST":
-        id =  request.form['id']
-
+        id =  evento_id
+        
         cursor = mysql.connection.cursor()
         INSERT = "INSERT INTO tb_pareve (par_usu_id, par_eve_id) VALUES (%s,%s)"
         cursor.execute(INSERT, (current_user.id, id))
         mysql.connection.commit()
         cursor.close()
-
-    return render_template("cadastre_se.html")
+        
+        return redirect(url_for('home'))

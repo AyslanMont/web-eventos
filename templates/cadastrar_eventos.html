@@ -6,19 +6,23 @@
     <form class="row g-3" action="{{ url_for('cadastrar_eventos') }}" method="POST">
         <div class="col-md-6">
             <label for="titulocadastro" class="form-label">Titulo do evento</label>
-            <input type="text" class="form-control" id="titulocadastro" name="titulo" required placeholder="Ex: Festa de Sant'ana">
+            <input type="text" class="form-control" id="titulocadastro" name="titulo" required
+                placeholder="Ex: Festa de Sant'ana">
         </div>
         <div class="col-md-6">
             <label for="organizadorcadastro" class="form-label">Organização</label>
-            <input type="text" class="form-control" id="organizadorcadastro" name="org" required placeholder="Ex: Prefeitura de Caicó">
+            <input type="text" class="form-control" id="organizadorcadastro" name="org" required
+                placeholder="Ex: Prefeitura de Caicó">
         </div>
         <div class="col-12">
             <label for="descricaoentrada" class="form-label">Descrição</label>
-            <input type="text" class="form-control" id="descricaoentrada" name="descricao" required placeholder="Ex: A festa de Sant'ana é o melhor festival do Brasil, venha conferir!">
+            <input type="text" class="form-control" id="descricaoentrada" name="descricao" required
+                placeholder="Ex: A festa de Sant'ana é o melhor festival do Brasil, venha conferir!">
         </div>
         <div class="col-12">
             <label for="descricaoentrada2" class="form-label">Endereço</label>
-            <input type="text" class="form-control" id="descricaoentrada2" placeholder="Bairro passa nada, Rua do sufoco, 157" name="endereco" required>
+            <input type="text" class="form-control" id="descricaoentrada2"
+                placeholder="Ex: Rua Coronel, 123, Bairro Centro, Caicó - RN, 59300-000, Brasil" name="endereco" required>
         </div>
         <div class="col-md-5">
             <label for="cidadeentrada" class="form-label">Cidade</label>
@@ -60,13 +64,13 @@
         <div class="col-md-2">
             <label for="dataentrada" class="form-label">Data</label>
             <input type="date" class="form-control" id="dataentrada" name="data" required>
-        </div> 
+        </div>
         <div class="col-md-2">
             <label for="horaentrada" class="form-label">Hora</label>
             <input type="time" class="form-control" id="horaentrada" name="hora" required>
-        </div>              
+        </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-primary w-25 mx-auto d-block rounded-pill">Cadastrar</button>
         </div>
     </form>
 </div>
